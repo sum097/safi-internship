@@ -502,6 +502,21 @@ html {
 
 /* New Collections + Popular Collections */
 
+#new-collections .swiper-button-prev,
+#new-collections .swiper-button-next {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  color: black;
+}
+
+#new-collections .swiper-button-prev::after,
+#new-collections .swiper-button-next::after {
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .new-collections__title,
 .popular-collections__title {
   margin-bottom: 24px;
