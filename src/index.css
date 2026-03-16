@@ -502,19 +502,20 @@ html {
 
 /* New Collections + Popular Collections */
 
-#new-collections .swiper-button-prev,
-#new-collections .swiper-button-next {
-  width: 40px;
-  height: 40px;
-  background-color: white;
-  border-radius: 50%;
-  color: black;
+#new-collections {
+  --swiper-navigation-size: 12px;
 }
 
-#new-collections .swiper-button-prev::after,
-#new-collections .swiper-button-next::after {
-  font-size: 14px;
-  font-weight: 700;
+#new-collections .swiper-button-prev,
+#new-collections .swiper-button-next,
+#popular-collections .swiper-button-prev,
+#popular-collections .swiper-button-next {
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  color: black;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .new-collections__title,

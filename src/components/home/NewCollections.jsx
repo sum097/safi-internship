@@ -1,15 +1,16 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Skeleton from "../../components/ui/Skeleton.jsx";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
 
 export default function NewCollections() {
   const [newCollections, setNewCollections] = useState([]);
   const [loading, setLoading] = useState(true);
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -39,11 +40,11 @@ export default function NewCollections() {
             spaceBetween={20}
             slidesPerView={3}
             breakpoints={{
-              0:    { slidesPerView: 1 },
-            640:  { slidesPerView: 3 },
-            1024: { slidesPerView: 6 },
+              0: { slidesPerView: 1 },
+              640: { slidesPerView: 3 },
+              1024: { slidesPerView: 6 },
             }}
-            >
+          >
             {loading
               ? new Array(6).fill(0).map((_, i) => (
                   <SwiperSlide key={i} className="collection-column">
@@ -76,7 +77,10 @@ export default function NewCollections() {
                   </SwiperSlide>
                 ))
               : newCollections.map((item) => (
-                  <SwiperSlide key={item.collectionId} className="collection-column">
+                  <SwiperSlide
+                    key={item.collectionId}
+                    className="collection-column"
+                  >
                     <Link
                       to={`/collection/${item.collectionId}`}
                       className="collection"
