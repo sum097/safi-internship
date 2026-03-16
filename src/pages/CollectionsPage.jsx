@@ -6,6 +6,7 @@ import axios from "axios";
 export default function CollectionsPage() {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(12)
 
   useEffect(() => {
     async function fetchData() {
@@ -55,7 +56,7 @@ export default function CollectionsPage() {
                   </div>
                 </div>
               ))
-            : collections.map((item) => (
+            : collections.slice(0, visible).map((item) => (
                 <div key={item.collectionId} className="collection-column">
                   <Link to="/collection/${item.collectionId}" className="collection">
                     <img
@@ -86,7 +87,12 @@ export default function CollectionsPage() {
                 </div>
               ))}
         </div>
-        <button className="collections-page__button">Load more</button>
+        {!loading && visible < collections.length && (
+        <button 
+        className="collections-page__button"
+        onClick={() => setVisible((prev) => prev + 6)}
+        >Load more</button>
+        )}
       </div>
     </div>
   );
