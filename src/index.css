@@ -502,6 +502,30 @@ html {
 
 /* New Collections + Popular Collections */
 
+.collection-slider {
+  position: relative;
+}
+
+.collection-slider__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collection-slider__btn--prev { left: 10px; }
+.collection-slider__btn--next { right: 10px; }
+
 #new-collections {
   --swiper-navigation-size: 12px;
 }

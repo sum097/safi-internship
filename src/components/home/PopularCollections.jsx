@@ -1,11 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Skeleton from "../../components/ui/Skeleton.jsx";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import CollectionGrid from "../collection/CollectionGrid.jsx";
+
 
 export default function PopularCollections() {
   const [popularCollections, setPopularCollections] = useState([]);
@@ -33,77 +29,7 @@ export default function PopularCollections() {
       <div className="container">
         <div className="row">
           <h2 className="popular-collections__title">Popular Collections</h2>
-          <Swiper
-            modules={[Navigation]}
-            navigation
-            loop
-            spaceBetween={20}
-            slidesPerView={3}
-            breakpoints={{
-              0:    { slidesPerView: 1 },
-            640:  { slidesPerView: 3 },
-            1024: { slidesPerView: 6 },
-            }}
-            >
-            {loading
-              ? new Array(6).fill(0).map((_, i) => (
-                  <SwiperSlide key={i} className="collection-column">
-                    <div className="collection">
-                      <Skeleton
-                        width="100%"
-                        height="200px"
-                        borderRadius="12px"
-                      />
-                      <div className="collection__info">
-                        <Skeleton
-                          width="60%"
-                          height="1rem"
-                          borderRadius="4px"
-                        />
-                        <div className="collection__stats">
-                          <Skeleton
-                            width="80px"
-                            height="1rem"
-                            borderRadius="4px"
-                          />
-                          <Skeleton
-                            width="80px"
-                            height="1rem"
-                            borderRadius="4px"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))
-                :
-                popularCollections.map((item) => (
-              <SwiperSlide key={item.collectionId} className="collection-column">
-                <Link to="/collection" className="collection">
-                  <img
-                    src={item.imageLink}
-                    alt={item.title}
-                    className="collection__img"
-                  />
-                  <div className="collection__info">
-                    <h3 className="collection__name">{item.title}</h3>
-                    <div className="collection__stats">
-                      <div className="collection__stat">
-                        <span className="collection__stat__label">Floor</span>
-                        <span className="collection__stat__data">{parseFloat(item.floor).toFixed(2)} ETH</span>
-                      </div>
-                      <div className="collection__stat">
-                        <span className="collection__stat__label">
-                          Total Volume
-                        </span>
-                        <span className="collection__stat__data">{item.totalVolume} ETH</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <CollectionGrid collections={popularCollections} loading={loading} slider />
         </div>
       </div>
     </section>
