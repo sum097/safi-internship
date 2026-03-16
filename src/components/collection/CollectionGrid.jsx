@@ -7,7 +7,7 @@ import "swiper/css";
 
 function CollectionCard({ item }) {
   return (
-    <Link to={`/collection/${item.collectionId}`} className="collection">
+    <Link to={`/collection/${item.id || item.collectionId}`} className="collection">
       <img src={item.imageLink} alt={item.title} className="collection__img" />
       <div className="collection__info">
         <h3 className="collection__name">{item.title}</h3>
@@ -85,7 +85,7 @@ export default function CollectionGrid( { collections, loading, slider = false, 
               </SwiperSlide>
             ))
           : collections.map((item) => (
-              <SwiperSlide key={item.collectionId} className="collection-column">
+              <SwiperSlide key={item.id || item.collectionId} className="collection-column">
                 <CollectionCard item={item} />
               </SwiperSlide>
             ))}
@@ -104,7 +104,7 @@ export default function CollectionGrid( { collections, loading, slider = false, 
               </div>
             ))
           : collections.slice(0, visible).map((item) => (
-              <div key={item.collectionId} className="collection-column">
+              <div key={item.id || item.collectionId} className="collection-column">
                 <CollectionCard item={item} />
               </div>
             ))}
