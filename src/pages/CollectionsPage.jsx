@@ -13,9 +13,9 @@ export default function CollectionsPage() {
     AOS.init({ duration: 800, once: true });
   }, []);
 
-  // 1
-  // 2
-  // 3
+  // a
+  // b
+  // c
 
   useEffect(() => {
     async function fetchData() {
