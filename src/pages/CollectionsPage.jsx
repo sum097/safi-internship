@@ -8,6 +8,10 @@ export default function CollectionsPage() {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
 
+// 1
+// 2
+// 3
+
   useEffect(() => {
     window.scrollTo(0, 0);
     AOS.init({ duration: 800, once: true });
