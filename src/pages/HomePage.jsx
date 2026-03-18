@@ -12,9 +12,16 @@ export default function HomePage() {
   return (
     <>
       <SelectedCollection />
-      <Trending />
-      <NewCollections />
-      <PopularCollections />
+      <div data-aos="fade-up">
+        <Trending />
+      </div>
+      <div data-aos="fade-up" data-aos-delay="100">
+        <Trending />
+        <NewCollections />
+      </div>
+      <div data-aos="fade-up" data-aos-delay="200">
+        <PopularCollections />
+      </div>
     </>
   );
 }

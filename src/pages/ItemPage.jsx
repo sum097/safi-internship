@@ -11,6 +11,8 @@ import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../components/ui/Skeleton";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function ItemPage() {
   const { id } = useParams();
@@ -21,7 +23,12 @@ export default function ItemPage() {
     minutes: 30,
     seconds: 56,
   });
-  const endTimeRef = useRef(null)
+  const endTimeRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    AOS.init({ duration: 800, once: true });
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,7 +41,7 @@ export default function ItemPage() {
           `https://remote-internship-api-production.up.railway.app/item/${id}`,
         );
         setItem(data.data);
-        endTimeRef.current = data.data.expiryDate
+        endTimeRef.current = data.data.expiryDate;
       } catch (error) {
         console.log("failed to fetch collection", error.response?.data);
       } finally {
@@ -68,7 +75,7 @@ export default function ItemPage() {
 
   return (
     <>
-      <section id="item-info">
+      <section id="item-info" data-aos="fade-up">
         <div className="container">
           <div className="row item-page__row">
             <div className="item-page__left">
@@ -205,7 +212,12 @@ export default function ItemPage() {
           </div>
         </div>
       </section>
-      <RecommendedItems collectionId={item?.collectionId} currentItemId={id} />
+      <div data-aos="fade-up" data-aos-delay="100">
+        <RecommendedItems
+          collectionId={item?.collectionId}
+          currentItemId={id}
+        />
+      </div>
     </>
   );
 }

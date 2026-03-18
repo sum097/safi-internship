@@ -6,7 +6,10 @@ import HomePage from "./pages/HomePage";
 import { Route, BrowserRouter as Router, Routes, useParams } from "react-router-dom";
 import ItemPage from "./pages/ItemPage";
 import UserPage from "./pages/UserPage";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
+AOS.init({ duration: 800, once: true });
 
 function ItemPageWrapper() {
   const { id } = useParams()
