@@ -21,7 +21,7 @@ export default function ItemPage() {
     minutes: 30,
     seconds: 56,
   });
-  const endTimeRef = useRef(Date.now() + (2 * 60 * 60 + 30 * 60 + 56) * 1000);
+  const endTimeRef = useRef(null)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,6 +34,7 @@ export default function ItemPage() {
           `https://remote-internship-api-production.up.railway.app/item/${id}`,
         );
         setItem(data.data);
+        endTimeRef.current = data.data.expiryDate
       } catch (error) {
         console.log("failed to fetch collection", error.response?.data);
       } finally {
@@ -90,7 +91,7 @@ export default function ItemPage() {
                           borderRadius="4px"
                         />
                       ) : (
-                        (item?.likes ?? 0)
+                        (item?.favorites ?? 0)
                       )}
                     </span>
                   </div>
@@ -120,7 +121,7 @@ export default function ItemPage() {
                     to={`/collection/${item.collectionId}`}
                     className="item-page__collection light-blue"
                   >
-                    {item.collectionTitle}
+                    {item.collection}
                   </Link>
                   <h1 className="item-page__name">{item.title}</h1>
                   <span className="item-page__owner">
@@ -148,7 +149,7 @@ export default function ItemPage() {
                         className="item-page__detail__icon"
                       />
                       <span className="item-page__detail__text">
-                        {item.likes} favorites
+                        {item.favorites} favorites
                       </span>
                     </div>
                     <div className="item-page__detail">
@@ -177,6 +178,9 @@ export default function ItemPage() {
                       <div className="item-page__sale__price">
                         <span className="item-page__sale__price__eth">
                           {parseFloat(item.ethPrice).toFixed(2)} ETH
+                        </span>
+                        <span className="item-page__sale__price__usd">
+                          {item.usdPrice}
                         </span>
                       </div>
                       <div className="item-page__sale__buttons">

@@ -4,6 +4,8 @@ import Skeleton from "../ui/Skeleton.jsx";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 
 function CollectionCard({ item, linkPrefix = "/collection" }) {
   return (
@@ -33,6 +35,32 @@ function CollectionCard({ item, linkPrefix = "/collection" }) {
   );
 }
 
+function ItemCard({ item, linkPrefix = "/item" }) {
+  return (
+    <Link to={`${linkPrefix}/${item.id || item.itemId}`} className="item">
+      <figure className="item__img__wrapper">
+        <img src={item.imageLink} alt={item.title} className="item__img" />
+      </figure>
+      <div className="item__details">
+        <span className="item__details__name">{item.title}</span>
+        <span className="item__details__price">
+          {parseFloat(item.floor || item.price).toFixed(2)} ETH
+        </span>
+        <span className="item__details__last-sale">
+          Last sale: {parseFloat(item.totalVolume || item.lastSale).toFixed(2)}{" "}
+          ETH
+        </span>
+      </div>
+      <div className="item__see-more">
+        <button className="item__see-more__button">See More</button>
+        <div className="item__see-more__icon">
+          <FontAwesomeIcon icon={faShoppingBag} />
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export function SkeletonCard() {
   return (
     <div className="collection">
@@ -55,6 +83,7 @@ export default function CollectionGrid({
   loadMore = false,
   linkPrefix = "/collection",
   loop = true,
+  isItemCard = false,
 }) {
   const [visible, setVisible] = useState(12);
   const prevRef = useRef(null);
@@ -119,7 +148,11 @@ export default function CollectionGrid({
                   key={item.id || item.collectionId}
                   className="collection-column"
                 >
-                  <CollectionCard item={item} linkPrefix={linkPrefix} />
+                  {isItemCard ? (
+                    <ItemCard item={item} linkPrefix={linkPrefix} />
+                  ) : (
+                    <CollectionCard item={item} linkPrefix={linkPrefix} />
+                  )}
                 </SwiperSlide>
               ))}
         </Swiper>
@@ -141,7 +174,11 @@ export default function CollectionGrid({
                 key={item.id || item.collectionId}
                 className="collection-column"
               >
-                <CollectionCard item={item} linkPrefix={linkPrefix} />
+                {isItemCard ? (
+                  <ItemCard item={item} linkPrefix={linkPrefix} />
+                ) : (
+                  <CollectionCard item={item} linkPrefix={linkPrefix} />
+                )}
               </div>
             ))}
       </div>

@@ -49,7 +49,7 @@ export default function RecommendedItems({collectionId, currentItemId}) {
                 More from this collection
               </h3>
             </div>
-            <CollectionGrid collections={items} loading={loading} slider linkPrefix="/item" />
+            <CollectionGrid collections={items} loading={loading} slider linkPrefix="/item" isItemCard/>
             <div className="recommended-items__footer">
               <Link
                 to={`/collection/${collectionId}`}

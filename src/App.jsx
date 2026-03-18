@@ -22,7 +22,7 @@ function App() {
         <Route path="/collections" element={<CollectionsPage />} />
         <Route path="/collection/:id" element={<CollectionPage />} />
         <Route path="/item/:id" element={<ItemPageWrapper />} />
-        <Route path="/user" element={<UserPage />} />
+        <Route path="/user/:id" element={<UserPage />} />
       </Routes>
       <Footer />
     </Router>
