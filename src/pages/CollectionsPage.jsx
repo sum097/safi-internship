@@ -8,14 +8,14 @@ export default function CollectionsPage() {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // a
+  // b
+  // c
+
   useEffect(() => {
     window.scrollTo(0, 0);
     AOS.init({ duration: 800, once: true });
   }, []);
-
-  // a
-  // b
-  // c
 
   useEffect(() => {
     async function fetchData() {
