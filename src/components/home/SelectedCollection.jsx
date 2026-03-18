@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SelectedItemVideo from "../../assets/selected-collection.mp4";
-import SelectedItemThumbnail from "../../assets/selected-collection-thumbnail.jpg";
-import SelectedItemLogo from "../../assets/selected-collection-logo.avif";
 import VerifiedIcon from "../../assets/verified.png";
 import { Link } from "react-router-dom";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Skeleton from "../ui/Skeleton";
 
@@ -72,7 +68,7 @@ export default function SelectedCollection() {
             />
           </Link>
           <div className="selected-collection__details">{collection.amountOfItems} items · {collection.floorPrice} ETH</div>
-          <Link to={"/collection"} className="selected-collection__button">
+          <Link to={`/collection/${collection.collectionId}`} className="selected-collection__button">
             <div className="green-pulse"></div>
             View Collection
           </Link>
