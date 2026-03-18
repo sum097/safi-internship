@@ -5,9 +5,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 
-function CollectionCard({ item }) {
+function CollectionCard({ item, linkPrefix = "/collection" }) {
   return (
-    <Link to={`/collection/${item.id || item.collectionId}`} className="collection">
+    <Link
+      to={`${linkPrefix}/${item.id || item.collectionId}`}
+      className="collection"
+    >
       <img src={item.imageLink} alt={item.title} className="collection__img" />
       <div className="collection__info">
         <h3 className="collection__name">{item.title}</h3>
@@ -30,8 +33,8 @@ function CollectionCard({ item }) {
   );
 }
 
-function SkeletonCard () {
-    return (
+export function SkeletonCard() {
+  return (
     <div className="collection">
       <Skeleton width="100%" height="200px" borderRadius="12px" />
       <div className="collection__info">
@@ -45,23 +48,47 @@ function SkeletonCard () {
   );
 }
 
-
-export default function CollectionGrid( { collections, loading, slider = false, loadMore = false }) {
-  const [visible, setVisible] = useState(12)
+export default function CollectionGrid({
+  collections,
+  loading,
+  slider = false,
+  loadMore = false,
+  linkPrefix = "/collection",
+  loop = true,
+}) {
+  const [visible, setVisible] = useState(12);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
   if (slider) {
     return (
       <div className="collection-slider">
-        <button ref={prevRef} className="collection-slider__btn collection-slider__btn--prev">
+        <button
+          ref={prevRef}
+          className="collection-slider__btn collection-slider__btn--prev"
+        >
           <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
-            <path d="M7 1L1 7L7 13" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M7 1L1 7L7 13"
+              stroke="black"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
-        <button ref={nextRef} className="collection-slider__btn collection-slider__btn--next">
+        <button
+          ref={nextRef}
+          className="collection-slider__btn collection-slider__btn--next"
+        >
           <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
-            <path d="M1 1L7 7L1 13" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M1 1L7 7L1 13"
+              stroke="black"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
         <Swiper
@@ -71,25 +98,31 @@ export default function CollectionGrid( { collections, loading, slider = false, 
             swiper.params.navigation.prevEl = prevRef.current;
             swiper.params.navigation.nextEl = nextRef.current;
           }}
-          loop
+          loop={loop}
           spaceBetween={20}
           breakpoints={{
-            0:    { slidesPerView: 1 },
-            640:  { slidesPerView: 3 },
-            1024: { slidesPerView: 6 },
+            0: { slidesPerView: 1 },
+            480: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 },
+            1280: { slidesPerView: 6 },
           }}
-        >{loading
-          ? new Array(6).fill(0).map((_, i) => (
-              <SwiperSlide key={i} className="collection-column">
-                <SkeletonCard />
-              </SwiperSlide>
-            ))
-          : collections.map((item) => (
-              <SwiperSlide key={item.id || item.collectionId} className="collection-column">
-                <CollectionCard item={item} />
-              </SwiperSlide>
-            ))}
-      </Swiper>
+        >
+          {loading
+            ? new Array(6).fill(0).map((_, i) => (
+                <SwiperSlide key={i} className="collection-column">
+                  <SkeletonCard />
+                </SwiperSlide>
+              ))
+            : collections.map((item) => (
+                <SwiperSlide
+                  key={item.id || item.collectionId}
+                  className="collection-column"
+                >
+                  <CollectionCard item={item} linkPrefix={linkPrefix} />
+                </SwiperSlide>
+              ))}
+        </Swiper>
       </div>
     );
   }
@@ -104,8 +137,11 @@ export default function CollectionGrid( { collections, loading, slider = false, 
               </div>
             ))
           : collections.slice(0, visible).map((item) => (
-              <div key={item.id || item.collectionId} className="collection-column">
-                <CollectionCard item={item} />
+              <div
+                key={item.id || item.collectionId}
+                className="collection-column"
+              >
+                <CollectionCard item={item} linkPrefix={linkPrefix} />
               </div>
             ))}
       </div>
@@ -118,5 +154,5 @@ export default function CollectionGrid( { collections, loading, slider = false, 
         </button>
       )}
     </>
-  )
+  );
 }
