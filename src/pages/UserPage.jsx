@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Skeleton from "../components/ui/Skeleton";
 import axios from "axios";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 export default function UserPage() {
   const { id } = useParams();
@@ -19,13 +17,6 @@ export default function UserPage() {
     if (sort === "high") return parseFloat(b.price) - parseFloat(a.price)
     if (sort === "low") return parseFloat(a.price) - parseFloat(b.price)
   })
-
-    useEffect(() => {
-    window.scrollTo(0, 0);
-    setUser(null);
-    setLoading(true);
-    AOS.init({ duration: 800, once: true });
-  }, [id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -110,7 +101,7 @@ export default function UserPage() {
         </div>
       </section>
 
-      <section id="user-items" data-aos="fade-up" data-aos-delay="100">
+      <section id="user-items">
         <div className="row user-items__row">
           <div className="user-items__header">
             <div className="user-items__header__left">
