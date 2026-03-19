@@ -16,7 +16,6 @@ export default function HomePage() {
         <Trending />
       </div>
       <div data-aos="fade-up" data-aos-delay="100">
-        <Trending />
         <NewCollections />
       </div>
       <div data-aos="fade-up" data-aos-delay="200">
