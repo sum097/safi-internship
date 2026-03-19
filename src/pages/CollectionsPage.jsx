@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CollectionGrid from "../components/collection/CollectionGrid";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 export default function CollectionsPage() {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    AOS.init({ duration: 800, once: true });
-  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -37,13 +30,7 @@ export default function CollectionsPage() {
     <div className="container">
       <div className="row">
         <h1 className="collections-page__title">Collections</h1>
-        <div data-aos="fade-up" data-aos-delay="100">
-          <CollectionGrid
-            collections={collections}
-            loading={loading}
-            loadMore
-          />
-        </div>
+        <CollectionGrid collections={collections} loading={loading} loadMore />
       </div>
     </div>
   );
