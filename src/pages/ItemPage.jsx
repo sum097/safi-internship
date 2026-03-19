@@ -11,8 +11,6 @@ import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../components/ui/Skeleton";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 export default function ItemPage() {
   const { id } = useParams();
@@ -24,11 +22,6 @@ export default function ItemPage() {
     seconds: 56,
   });
   const endTimeRef = useRef(null);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    AOS.init({ duration: 800, once: true });
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,7 +68,7 @@ export default function ItemPage() {
 
   return (
     <>
-      <section id="item-info" data-aos="fade-up">
+      <section id="item-info">
         <div className="container">
           <div className="row item-page__row">
             <div className="item-page__left">
@@ -212,12 +205,10 @@ export default function ItemPage() {
           </div>
         </div>
       </section>
-      <div data-aos="fade-up" data-aos-delay="100">
         <RecommendedItems
           collectionId={item?.collectionId}
           currentItemId={id}
         />
-      </div>
     </>
   );
 }
