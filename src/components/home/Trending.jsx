@@ -27,15 +27,15 @@ export default function Trending() {
   const firstColumn = trending.slice(0, 5);
   const secondColumn = trending.slice(5, 10);
 
-  const renderSkeletonRows = () =>
+  const renderSkeletonRows = (startRank = 1) =>
     new Array(5).fill(0).map((_, i) => (
-      <div key={i} className="trending-collection">
-        <Skeleton width="24px" height="1rem" borderRadius="4px" />
+       <div key={i} className="trending-collection">
+        <div className="trending-collection__rank">{startRank + i}</div>
         <div className="trending-collection__collection">
-          <figure className="trending-collection__img__wrapper">
-            <Skeleton width="40px" height="40px" borderRadius="50%" />
-          </figure>
-          <Skeleton width="120px" height="1rem" borderRadius="4px" />
+          <Skeleton width="64px" height="64px" borderRadius="12px" />
+          <div style={{ marginLeft: "12px" }}>
+            <Skeleton width="120px" height="1rem" borderRadius="4px" />
+          </div>
         </div>
         <Skeleton width="60px" height="1rem" borderRadius="4px" />
         <Skeleton width="60px" height="1rem" borderRadius="4px" />
@@ -106,7 +106,7 @@ export default function Trending() {
             <div className="trending-column">
               {columnHeader("trending-column__header2")}
               <div className="trending-column__body">
-                {loading ? renderSkeletonRows() : renderRows(secondColumn)}
+                {loading ? renderSkeletonRows(6) : renderRows(secondColumn)}
               </div>
             </div>
           </div>
