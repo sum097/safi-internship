@@ -79,21 +79,19 @@ export default function ItemPage() {
                     className="item-page__img__icon"
                   />
                   <div className="item-page__img__likes">
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      className="item-page__img__icon"
-                    />
-                    <span className="item-page__img__likes__text">
-                      {loading ? (
-                        <Skeleton
-                          width="20px"
-                          height="1rem"
-                          borderRadius="4px"
+                    {loading ? (
+                      <Skeleton width="40px" height="1rem" borderRadius="4px" />
+                    ) : (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          className="item-page__img__icon"
                         />
-                      ) : (
-                        (item?.favorites ?? 0)
-                      )}
-                    </span>
+                        <span className="item-page__img__likes__text">
+                          {item?.favorites ?? 0}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
                 {loading ? (
@@ -212,8 +210,7 @@ export default function ItemPage() {
                     <div className="item-page__sale__header">
                       <div className="green-pulse"></div>
                       <span>
-                        Sale ends in {timeLeft.hours}h{" "}
-                        {timeLeft.minutes}m{" "}
+                        Sale ends in {timeLeft.hours}h {timeLeft.minutes}m{" "}
                         {timeLeft.seconds}s
                       </span>
                     </div>
@@ -225,7 +222,7 @@ export default function ItemPage() {
                         <span className="item-page__sale__price__eth">
                           {parseFloat(item.ethPrice).toFixed(2)} ETH
                         </span>
-                        <span className="item-page__sale__price__usd">
+                        <span className="item-page__sale__price__dollars">
                           {item.usdPrice}
                         </span>
                       </div>
