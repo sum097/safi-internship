@@ -6,12 +6,12 @@ import Skeleton from "../ui/Skeleton.jsx";
 
 export default function CollectionItems({ collection, loading }) {
   const [visible, setVisible] = useState(12);
-  const [sort, setSort] = useState("default")
+  const [sort, setSort] = useState("default");
 
   const items = [...(collection?.items || [])].sort((a, b) => {
-    if (sort === "high") return parseFloat(b.price) - parseFloat(a.price)
-    if (sort === "low") return parseFloat(a.price) - parseFloat(b.price)
-  })
+    if (sort === "high") return parseFloat(b.price) - parseFloat(a.price);
+    if (sort === "low") return parseFloat(a.price) - parseFloat(b.price);
+  });
 
   if (loading) {
     return (
@@ -25,16 +25,16 @@ export default function CollectionItems({ collection, loading }) {
             <Skeleton width="120px" height="2rem" borderRadius="6px" />
           </div>
           <div className="collection-items__body">
-            {new Array(6).fill(0).map((_, i) => (
+            {new Array(10).fill(0).map((_, i) => (
               <div key={i} className="item-column">
                 <div className="item">
                   <figure className="item__img__wrapper">
-                    <Skeleton width="100%" height="200px" borderRadius="12px" />
+                    <Skeleton width="100%" height="200px" borderRadius="0px" />
                   </figure>
                   <div className="item__details">
-                    <Skeleton width="80%" height="1rem" borderRadius="4px" />
                     <Skeleton width="50%" height="1rem" borderRadius="4px" />
-                    <Skeleton width="60%" height="0.8rem" borderRadius="4px" />
+                    <Skeleton width="30%" height="1rem" borderRadius="4px" />
+                    <Skeleton width="40%" height="0.8rem" borderRadius="4px" />
                   </div>
                 </div>
               </div>
@@ -58,7 +58,14 @@ export default function CollectionItems({ collection, loading }) {
               {items.length} results
             </span>
           </div>
-          <select className="collection-items__header__sort" value={sort} onChange={(e) => {setSort (e.target.value); setVisible(12)}}>
+          <select
+            className="collection-items__header__sort"
+            value={sort}
+            onChange={(e) => {
+              setSort(e.target.value);
+              setVisible(12);
+            }}
+          >
             <option value="default">Default</option>
             <option value="high">Price high to low</option>
             <option value="low">Price low to high</option>
