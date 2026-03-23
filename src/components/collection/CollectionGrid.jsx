@@ -64,12 +64,17 @@ function ItemCard({ item, linkPrefix = "/item" }) {
 export function SkeletonCard() {
   return (
     <div className="collection">
-      <Skeleton width="100%" height="200px" borderRadius="12px" />
+      <Skeleton width="100%" height="200px" borderRadius="0px" />
       <div className="collection__info">
-        <Skeleton width="60%" height="1rem" borderRadius="4px" />
         <div className="collection__stats">
-          <Skeleton width="80px" height="1rem" borderRadius="4px" />
-          <Skeleton width="80px" height="1rem" borderRadius="4px" />
+          <div className="collection__stat">
+            <Skeleton width="60px" height="0.85rem" borderRadius="4px" />
+            <Skeleton width="90px" height="1rem" borderRadius="4px" />
+          </div>
+          <div className="collection__stat">
+            <Skeleton width="80px" height="0.85rem" borderRadius="4px" />
+            <Skeleton width="90px" height="1rem" borderRadius="4px" />
+          </div>
         </div>
       </div>
     </div>
@@ -164,7 +169,7 @@ export default function CollectionGrid({
     <>
       <div className="collections__body">
         {loading
-          ? new Array(6).fill(0).map((_, i) => (
+          ? new Array(12).fill(0).map((_, i) => (
               <div key={i} className="collection-column">
                 <SkeletonCard />
               </div>
@@ -182,7 +187,7 @@ export default function CollectionGrid({
               </div>
             ))}
       </div>
-      {loadMore && !loading && visible < collections.length && (
+      {loadMore && (loading || visible < collections.length) && (
         <button
           className="collections-page__button"
           onClick={() => setVisible((prev) => prev + 6)}
