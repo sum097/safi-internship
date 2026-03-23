@@ -11,12 +11,12 @@ export default function UserPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(12);
-  const [sort, setSort] = useState("default")
+  const [sort, setSort] = useState("default");
 
   const sortItems = [...(user?.items || [])].sort((a, b) => {
-    if (sort === "high") return parseFloat(b.price) - parseFloat(a.price)
-    if (sort === "low") return parseFloat(a.price) - parseFloat(b.price)
-  })
+    if (sort === "high") return parseFloat(b.price) - parseFloat(a.price);
+    if (sort === "low") return parseFloat(a.price) - parseFloat(b.price);
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,11 +49,13 @@ export default function UserPage() {
   return (
     <>
       <header
-        style={{
-          backgroundImage: user?.imageLink
-            ? `url(${user.imageLink})`
-            : undefined,
-        }}
+        style={
+          loading || !user
+            ? { background: "#e0e0e0" }
+            : {
+                backgroundImage: `url(${user.imageLink})`,
+              }
+        }
         id="user-header"
       ></header>
 
@@ -62,7 +64,7 @@ export default function UserPage() {
           <div className="user-info__wrapper">
             <figure className="user-info__img__wrapper">
               {loading || !user ? (
-                <Skeleton width="80px" height="80px" borderRadius="50%" />
+                <Skeleton width="180px" height="180px" borderRadius="50%" />
               ) : (
                 <img
                   src={user?.profilePicture}
@@ -72,10 +74,20 @@ export default function UserPage() {
               )}
             </figure>
             {loading || !user ? (
-              <>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                  marginTop: "16px",
+                }}
+              >
                 <Skeleton width="160px" height="2rem" borderRadius="6px" />
-                <Skeleton width="200px" height="1rem" borderRadius="4px" />
-              </>
+                <div style={{ display: "flex", gap: "16px" }}>
+                  <Skeleton width="160px" height="1rem" borderRadius="4px" />
+                  <Skeleton width="100px" height="1rem" borderRadius="4px" />
+                </div>
+              </div>
             ) : (
               <>
                 <h1 className="user-info__name">{user.name}</h1>
@@ -105,9 +117,22 @@ export default function UserPage() {
         <div className="row user-items__row">
           <div className="user-items__header">
             <div className="user-items__header__left">
-              <span className="user-items__header__text">{items.length} items</span>
+              <span className="user-items__header__text">
+                {loading ? (
+                  <Skeleton width="60px" height="1rem" borderRadius="4px" />
+                ) : (
+                  `${items.length} items`
+                )}
+              </span>
             </div>
-            <select className="user-items__header__sort" value={sort} onChange={(e) => {setSort (e.target.value); setVisible(12)}}>
+            <select
+              className="user-items__header__sort"
+              value={sort}
+              onChange={(e) => {
+                setSort(e.target.value);
+                setVisible(12);
+              }}
+            >
               <option value="default">Default</option>
               <option value="high">Price high to low</option>
               <option value="low">Price low to high</option>
@@ -121,23 +146,23 @@ export default function UserPage() {
                       <figure className="item__img__wrapper">
                         <Skeleton
                           width="100%"
-                          height="200px"
-                          borderRadius="12px"
+                          height="100%"
+                          borderRadius="0px"
                         />
                       </figure>
                       <div className="item__details">
-                        <Skeleton
-                          width="80%"
-                          height="1rem"
-                          borderRadius="4px"
-                        />
                         <Skeleton
                           width="50%"
                           height="1rem"
                           borderRadius="4px"
                         />
                         <Skeleton
-                          width="60%"
+                          width="30%"
+                          height="1rem"
+                          borderRadius="4px"
+                        />
+                        <Skeleton
+                          width="40%"
                           height="0.8rem"
                           borderRadius="4px"
                         />
@@ -159,7 +184,9 @@ export default function UserPage() {
                         <span className="item__details__name">
                           {item.title}
                         </span>
-                        <span className="item__details__price">{parseFloat(item.price).toFixed(2)} ETH</span>
+                        <span className="item__details__price">
+                          {parseFloat(item.price).toFixed(2)} ETH
+                        </span>
                         <span className="item__details__last-sale">
                           Last sale: {parseFloat(item.lastSale).toFixed(2)} ETH
                         </span>
@@ -178,7 +205,12 @@ export default function UserPage() {
           </div>
         </div>
         {!loading && visible < sortItems.length && (
-          <button className="collection-page__button" onClick={() => setVisible((prev) => prev + 6)}>Load more</button>
+          <button
+            className="collection-page__button"
+            onClick={() => setVisible((prev) => prev + 6)}
+          >
+            Load more
+          </button>
         )}
       </section>
     </>
