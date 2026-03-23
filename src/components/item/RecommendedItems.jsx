@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CollectionGrid from "../collection/CollectionGrid.jsx";
 import axios from "axios";
+import Skeleton from "../ui/Skeleton.jsx";
 
-export default function RecommendedItems({collectionId, currentItemId}) {
+export default function RecommendedItems({ collectionId, currentItemId }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
- 
 
   useEffect(() => {
     if (!collectionId) return;
@@ -25,7 +25,7 @@ export default function RecommendedItems({collectionId, currentItemId}) {
           totalVolume: item.lastSale,
           imageLink: item.imageLink,
           title: item.title,
-        }))
+        }));
 
         setItems(collectionItems.filter((item) => item.id !== currentItemId));
       } catch (error) {
@@ -37,26 +37,41 @@ export default function RecommendedItems({collectionId, currentItemId}) {
     fetchData();
   }, [collectionId, currentItemId]);
 
-
   return (
     <section id="recommended-items">
       <div className="container">
         <div className="row recommended-items__row">
           <div className="recommended-items__wrapper">
             <div className="recommended-items__header">
-              <FontAwesomeIcon icon={faTableCells} />
-              <h3 className="recommended-items__header__title">
-                More from this collection
-              </h3>
+              {loading ? (
+                <Skeleton width="160px" height="1.2rem" borderRadius="4px" />
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faTableCells} />
+                  <h3 className="recommended-items__header__title">
+                    More from this collection
+                  </h3>
+                </>
+              )}
             </div>
-            <CollectionGrid collections={items} loading={loading} slider linkPrefix="/item" isItemCard/>
+            <CollectionGrid
+              collections={items}
+              loading={loading}
+              slider
+              linkPrefix="/item"
+              isItemCard
+            />
             <div className="recommended-items__footer">
-              <Link
-                to={`/collection/${collectionId}`}
-                className="recommended-items__footer__button"
-              >
-                View Collection
-              </Link>
+              {loading ? (
+                <Skeleton width="100px" height="2rem" borderRadius="6px" />
+              ) : (
+                <Link
+                  to={`/collection/${collectionId}`}
+                  className="recommended-items__footer__button"
+                >
+                  View Collection
+                </Link>
+              )}
             </div>
           </div>
         </div>
